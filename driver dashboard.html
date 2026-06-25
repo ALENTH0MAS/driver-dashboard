@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-<title>Fleet Earnings Dashboard</title>
+<title>Driver Earnings Dashboard</title>
 <style>
 :root {
   --bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;
@@ -214,6 +214,12 @@ function showError(msg){const b=document.getElementById('error-box');b.textConte
 async function loadFile(file){
   if(!file) return;
   document.getElementById('error-box').style.display='none';
+  // Validate file type before attempting to parse
+  const ext = file.name.split('.').pop().toLowerCase();
+  if(ext !== 'xlsx' && ext !== 'xls'){
+    showError('Invalid file type. Please upload an Excel file (.xlsx or .xls).');
+    return;
+  }
   if(typeof XLSX==='undefined'){
     showError('Excel reader failed to load. Check your internet connection and reload the page.');
     return;
@@ -595,7 +601,8 @@ function renderRent(data){
   const labels=Object.keys(bd);
   const earned=labels.map(d=>bd[d].reduce((a,r)=>a+r.total,0));
   const rent=labels.map(d=>bd[d].reduce((a,r)=>a+r.rent,0));
-  const net=labels.map((_,i)=>earned[i]-rent[i]);
+  // Use file's own net earnings — never recompute
+  const net=labels.map(d=>bd[d].reduce((a,r)=>a+r.net,0));
   const ds=[
     {label:'Earned',color:'#4f8ef7',data:earned},
     {label:'Rent',color:'#f87171',data:rent},
@@ -608,7 +615,7 @@ function renderDaily(data){
   const drivers=[...new Set(data.map(d=>d.driver))];
   const ds=drivers.map((drv,i)=>{
     const row=data.find(d=>d.driver===drv);
-    return{label:drv,color:COLORS[i%COLORS.length],data:row?row.days:[0,0,0,0,0,0]};
+    return{label:drv,color:COLORS[i%COLORS.length],data:row?row.days:[0,0,0,0,0,0,0]};
   });
   document.getElementById('chart-daily').innerHTML=svgBar(DAYS,ds,300,180);
 }
