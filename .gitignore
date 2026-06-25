@@ -1,0 +1,9 @@
+# Excel data files — customers upload their own; don't publish sample data
+*.xlsx
+*.xls
+~$*
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.vscode/
