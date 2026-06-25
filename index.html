@@ -64,7 +64,10 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
 
 /* CHARTS - pure SVG/Canvas */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;overflow:hidden;margin-top:0;}
-.card-title{font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:6px;}
+.card-title{font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:7px;}
+.ti{width:16px;height:16px;flex:none;fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.kpi-icon svg{width:20px;height:20px;fill:none;stroke:var(--kpi-color,var(--accent));stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.drop-icon{color:var(--accent);}
 .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px;}
 .chart-wide{grid-column:1/-1;}
 @media(max-width:600px){.charts-grid{grid-template-columns:1fr;}.chart-wide{grid-column:1;}}
@@ -101,13 +104,12 @@ svg{overflow:visible;}
 <body>
 
 <div id="upload-screen">
-  <div class="brand">🚖 Fleet Manager</div>
   <h1 class="upload-title">Driver Earnings<br><span>Dashboard</span></h1>
-  <p class="upload-sub">Upload any driver earnings Excel file (.xlsx) to instantly see performance, trends and rent analytics.</p>
+  <p class="upload-sub">Upload your driver earnings Excel file to instantly see performance, trends and rent analytics.</p>
   <div class="drop-zone" id="drop-zone">
-    <span class="drop-icon">📊</span>
+    <span class="drop-icon"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
     <h3>Drop your Excel file here</h3>
-    <p>Works with driver_earnings_v3.xlsx and any .xlsx format</p>
+    <p>Supports .xlsx and .xls files</p>
     <button class="btn" onclick="document.getElementById('file-input').click()">Choose File</button>
     <input type="file" id="file-input" accept=".xlsx,.xls">
   </div>
@@ -116,10 +118,10 @@ svg{overflow:visible;}
 
 <div id="dashboard">
   <div class="topbar">
-    <div class="topbar-brand"><span class="dot"></span>Fleet Dashboard</div>
+    <div class="topbar-brand"><span class="dot"></span>Driver Earnings Dashboard</div>
     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
       <span id="fname" style="font-size:11px;color:var(--muted);max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
-      <button class="reload-btn" onclick="location.reload()">↩ New File</button>
+      <button class="reload-btn" onclick="location.reload()"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>New File</button>
     </div>
   </div>
   <div class="main">
@@ -139,15 +141,15 @@ svg{overflow:visible;}
 
     <div class="section-label">Earnings Visuals</div>
     <div class="charts-grid">
-      <div class="card chart-wide"><div class="card-title">📈 Weekly Earnings Trend</div><div id="chart-trend"></div></div>
-      <div class="card"><div class="card-title">🏆 Driver Comparison</div><div id="chart-bar"></div></div>
-      <div class="card"><div class="card-title">🥧 Earnings Share</div><div id="chart-pie"></div></div>
-      <div class="card"><div class="card-title">⚖️ Earnings vs Rent vs Net</div><div id="chart-rent"></div></div>
-      <div class="card"><div class="card-title">📅 Daily Breakdown</div><div id="chart-daily"></div></div>
+      <div class="card chart-wide"><div class="card-title"><svg class="ti" viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg>Weekly Earnings Trend</div><div id="chart-trend"></div></div>
+      <div class="card"><div class="card-title"><svg class="ti" viewBox="0 0 24 24"><line x1="6" y1="20" x2="6" y2="12"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="18" y1="20" x2="18" y2="9"/></svg>Driver Comparison</div><div id="chart-bar"></div></div>
+      <div class="card"><div class="card-title"><svg class="ti" viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>Earnings Share</div><div id="chart-pie"></div></div>
+      <div class="card"><div class="card-title"><svg class="ti" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M3 7l9-4 9 4"/><path d="M3 7l3 6H0z" transform="translate(3 0)"/><path d="M18 7l3 6h-6z"/></svg>Earnings vs Rent vs Net</div><div id="chart-rent"></div></div>
+      <div class="card"><div class="card-title"><svg class="ti" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Daily Breakdown</div><div id="chart-daily"></div></div>
     </div>
 
     <div class="section-label">Daily Earnings Heatmap</div>
-    <div class="card"><div class="card-title">🌡️ Driver × Day</div>
+    <div class="card"><div class="card-title"><svg class="ti" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Driver × Day</div>
       <div class="heatmap-wrap"><table class="heatmap" id="heatmap"></table></div></div>
 
     <div class="section-label">Deep Analysis</div>
@@ -164,6 +166,39 @@ svg{overflow:visible;}
 const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 const COLORS = ['#4f8ef7','#a78bfa','#34d399','#fbbf24','#f87171','#38bdf8'];
 const eur = v => '€' + Number(v||0).toFixed(2);
+
+// Inline line-icons (professional, no emoji, no external deps).
+const svg = p => `<svg viewBox="0 0 24 24">${p}</svg>`;
+const ICON = {
+  cash:     svg('<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><line x1="6" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="18" y2="12"/>'),
+  car:      svg('<path d="M5 13l1.5-4.5A2 2 0 0 1 8.4 7h7.2a2 2 0 0 1 1.9 1.5L19 13"/><path d="M5 13h14v4a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H8v1a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1z"/><circle cx="7.5" cy="15.5" r="0.5"/><circle cx="16.5" cy="15.5" r="0.5"/>'),
+  trend:    svg('<polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/>'),
+  calendar: svg('<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>'),
+  award:    svg('<circle cx="12" cy="8" r="6"/><polyline points="8.2 13.5 7 22 12 19 17 22 15.8 13.5"/>'),
+  alert:    svg('<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12" y2="17"/>'),
+  route:    svg('<circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h6a4 4 0 0 0 0-8H10a4 4 0 0 1 0-8h6"/>'),
+  user:     svg('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'),
+  gift:     svg('<rect x="3" y="8" width="18" height="13" rx="1"/><path d="M3 12h18"/><path d="M12 8v13"/><path d="M12 8S10 3 7.5 4.5 9.5 8 12 8zm0 0s2-5 4.5-3.5S14.5 8 12 8z"/>'),
+  clock:    svg('<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/>'),
+  // Neutral default for any metric we do not recognise.
+  dot:      svg('<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/>'),
+};
+
+// Choose an icon from a metric/column label. Unknown labels → neutral default.
+function pickIcon(label){
+  const t=String(label||'').toLowerCase();
+  if(/net/.test(t))                         return ICON.trend;
+  if(/rent|rental/.test(t))                 return ICON.car;
+  if(/penalt|fine|deduct/.test(t))          return ICON.alert;
+  if(/day|attend|worked|shift/.test(t))     return ICON.calendar;
+  if(/top|best|award|rank|winner/.test(t))  return ICON.award;
+  if(/earn|income|revenue|amount|total|gross|pay|salary|€|\$/.test(t)) return ICON.cash;
+  if(/trip|ride|gig|delivery|order|job/.test(t)) return ICON.route;
+  if(/driver|name|employee|partner|staff|rider/.test(t)) return ICON.user;
+  if(/bonus|tip|reward/.test(t))            return ICON.gift;
+  if(/hour|time|duration/.test(t))          return ICON.clock;
+  return ICON.dot; // safe fallback — never blank, never broken
+}
 
 let allData=[], weeks=[], selectedWeek=null;
 
@@ -401,14 +436,15 @@ function renderKPIs(data){
   const tPen=data.reduce((a,d)=>a+(d.penalty||0),0);
   const drivers=[...new Set(data.map(d=>d.driver))];
   const top=data.reduce((b,d)=>d.net>(b?d.net:-Infinity)? d:b,null);
+  // Icons are detected from each metric's label (pickIcon). Unknown → default.
   const kpis=[
-    {icon:'💰',label:'Total Earnings',value:eur(te),sub:'from file',c:'#4f8ef7'},
-    {icon:'🚗',label:'Total Rent',value:eur(tr),sub:'weekly rent',c:'#f87171'},
-    {icon:'📈',label:'Net Earnings', value:eur(tn),sub:'earnings − rent − penalty',c:'#34d399'},
-    {icon:'🗓️',label:'Days Worked',value:String(tWorked),sub:`${drivers.length} drivers`,c:'#a78bfa'},
-    {icon:'🏆',label:'Top by Net',value:top?top.driver:'—',sub:top?eur(top.net):'',c:'#fbbf24'},
-    {icon:'⚠️',label:'Penalties',value:eur(tPen),sub:'total penalties',c:'#fbbf24'},
-  ];
+    {label:'Total Earnings',value:eur(te),sub:'from file',c:'#4f8ef7'},
+    {label:'Total Rent',value:eur(tr),sub:'weekly rent',c:'#f87171'},
+    {label:'Net Earnings', value:eur(tn),sub:'earnings − rent − penalty',c:'#34d399'},
+    {label:'Days Worked',value:String(tWorked),sub:`${drivers.length} drivers`,c:'#a78bfa'},
+    {label:'Top by Net',value:top?top.driver:'—',sub:top?eur(top.net):'',c:'#fbbf24'},
+    {label:'Penalties',value:eur(tPen),sub:'total penalties',c:'#fbbf24'},
+  ].map(k=>({...k,icon:pickIcon(k.label)}));
   document.getElementById('kpi-grid').innerHTML=kpis.map(k=>`
     <div class="kpi" style="--kpi-color:${k.c}">
       <span class="kpi-icon">${k.icon}</span>
@@ -625,27 +661,27 @@ function renderAnalysis(data){
   });
   document.getElementById('analysis-grid').innerHTML=`
     <div class="analysis-card">
-      <h4>📅 Best & Worst Days</h4>
+      <h4>Best &amp; Worst Days</h4>
       <div class="arow"><span>Best Day</span><span class="aval" style="color:var(--green)">${DAYS[bestDay]} — ${eur(dayTotals[bestDay])}</span></div>
       <div class="arow"><span>Worst Day</span><span class="aval" style="color:var(--red)">${DAYS[worstDay]} — ${eur(dayTotals[worstDay])}</span></div>
       ${DAYS.map((d,i)=>`<div class="arow"><span>${d}</span><span class="aval">${eur(dayTotals[i])}</span></div>`).join('')}
     </div>
     <div class="analysis-card">
-      <h4>📊 Driver Consistency</h4>
+      <h4>Driver Consistency</h4>
       ${consistency.map((c,i)=>`<div class="arow"><span>${c.driver}</span>
         <span class="badge ${i===0?'bg':i===consistency.length-1?'br':'ba'}">${i===0?'Most Consistent':i===consistency.length-1?'Most Variable':'Moderate'}</span>
       </div>`).join('')}
     </div>
     <div class="analysis-card">
-      <h4>🗓️ Attendance (from file)</h4>
+      <h4>Attendance (from file)</h4>
       ${drivers.map(drv=>{const r=bd[drv][0];return `<div class="arow"><span>${drv}</span><span class="aval">${r.worked||0} worked · ${r.off||0} off</span></div>`;}).join('')}
     </div>
     <div class="analysis-card">
-      <h4>⚖️ Net per Driver (from file)</h4>
+      <h4>Net per Driver (from file)</h4>
       ${drivers.map(drv=>{const net=bd[drv].reduce((a,r)=>a+r.net,0);return `<div class="arow"><span>${drv}</span><span class="aval" style="color:${net>=0?'var(--green)':'var(--red)'}">${eur(net)}</span></div>`;}).join('')}
     </div>
     <div class="analysis-card">
-      <h4>📈 Growth & Summary</h4>
+      <h4>Growth &amp; Summary</h4>
       ${wowHtml}
       <div class="arow"><span>Drivers</span><span class="aval">${drivers.length}</span></div>
       <div class="arow"><span>Weeks Tracked</span><span class="aval">${wks.length}</span></div>
