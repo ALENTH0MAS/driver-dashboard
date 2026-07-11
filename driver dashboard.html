@@ -39,7 +39,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 .reload-btn{padding:7px 14px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer;}
 .main{padding:16px;max-width:900px;margin:0 auto;width:100%;}
-.section-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;margin-top:24px;}
+.section-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;margin-top:32px;overflow:hidden;}
 
 /* FILTERS */
 .slicers{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:4px;}
@@ -62,28 +62,81 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
 .kpi-value{font-size:22px;font-weight:800;margin:4px 0;font-variant-numeric:tabular-nums;}
 .kpi-sub{font-size:11px;color:var(--muted);}
 
+/* TOP DRIVER SPOTLIGHT */
+.top-driver-card{
+  background:linear-gradient(135deg,rgba(251,191,36,.14),rgba(79,142,247,.08));
+  border:1px solid rgba(251,191,36,.35);border-radius:16px;padding:18px;
+  display:flex;align-items:center;gap:16px;position:relative;overflow:hidden;
+}
+.top-driver-card::before{content:'';position:absolute;top:-40%;right:-10%;width:180px;height:180px;
+  background:radial-gradient(circle,rgba(251,191,36,.18),transparent 70%);pointer-events:none;}
+.td-avatar{
+  width:56px;height:56px;border-radius:50%;flex:none;
+  background:linear-gradient(135deg,var(--amber),#f59e0b);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:800;color:#1a1200;
+  box-shadow:0 0 0 3px rgba(251,191,36,.25),0 4px 14px rgba(251,191,36,.35);
+}
+.td-info{flex:1;min-width:0;}
+.td-crown{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);display:flex;align-items:center;gap:5px;margin-bottom:3px;}
+.td-name{font-size:19px;font-weight:800;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.td-meta{font-size:11px;color:var(--muted);margin-top:2px;}
+.td-right{text-align:right;flex:none;}
+.td-net{font-size:22px;font-weight:800;color:var(--green);font-variant-numeric:tabular-nums;}
+.td-margin{font-size:10.5px;color:var(--muted);margin-top:2px;}
+.top-driver-empty{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center;color:var(--muted);font-size:13px;}
+
 /* CHARTS - pure SVG/Canvas */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;overflow:hidden;margin-top:0;}
 .card-title{font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:7px;}
 .ti{width:16px;height:16px;flex:none;fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 .kpi-icon svg{width:20px;height:20px;fill:none;stroke:var(--kpi-color,var(--accent));stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 .drop-icon{color:var(--accent);}
-.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px;}
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px;}
 .chart-wide{grid-column:1/-1;}
 @media(max-width:600px){.charts-grid{grid-template-columns:1fr;}.chart-wide{grid-column:1;}}
 svg{overflow:visible;}
 
-/* HEATMAP */
-.heatmap-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-.heatmap{width:100%;border-collapse:separate;border-spacing:3px;font-size:11px;min-width:380px;}
-.heatmap th{padding:6px 8px;color:var(--muted);font-weight:600;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.5px;}
-.heatmap td{padding:7px 6px;text-align:center;border-radius:6px;font-weight:700;font-size:11px;}
-.hm-name{text-align:left!important;font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;}
-.hm-high{background:rgba(52,211,153,.22);color:#34d399;}
-.hm-mid{background:rgba(251,191,36,.18);color:#fbbf24;}
-.hm-low{background:rgba(248,113,113,.18);color:#f87171;}
-.hm-zero{background:rgba(255,255,255,.04);color:rgba(148,163,184,.4);}
-.hm-total{background:rgba(79,142,247,.18);color:#4f8ef7;font-weight:800;}
+/* HEATMAP / ATTENDANCE GRID */
+.legend-inline{float:right;display:inline-flex;align-items:center;gap:5px;font-size:10px;text-transform:none;letter-spacing:0;color:var(--muted);font-weight:600;}
+.lg-swatch{width:10px;height:10px;border-radius:3px;display:inline-block;margin-left:8px;margin-right:2px;}
+.lg-swatch:first-child{margin-left:0;}
+.lg-work{background:rgba(52,211,153,.7);}
+.lg-off{background:rgba(248,113,113,.75);}
+.lg-none{background:rgba(148,163,184,.25);}
+
+.heatmap-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;}
+.heatmap{border-collapse:separate;border-spacing:0 6px;font-size:12px;width:100%;min-width:640px;}
+.heatmap thead th{padding:0 10px 8px;color:var(--muted);font-weight:700;text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px;white-space:nowrap;}
+.heatmap thead th.hm-name-h{text-align:left;padding-left:14px;}
+
+.heatmap tbody tr{background:var(--surface2);}
+.heatmap tbody tr td:first-child{border-radius:10px 0 0 10px;}
+.heatmap tbody tr td:last-child{border-radius:0 10px 10px 0;}
+
+.hm-name{
+  text-align:left!important;font-size:13px;font-weight:700;color:var(--text);
+  white-space:nowrap;padding:12px 16px;min-width:130px;
+  position:sticky;left:0;background:var(--surface2);z-index:2;
+  border-right:1px solid var(--border);
+}
+.hm-veh{display:block;font-size:10px;font-weight:600;color:var(--muted);margin-top:2px;letter-spacing:.3px;}
+
+.hm-cell{
+  text-align:center;font-weight:700;font-size:10.5px;padding:12px 10px;
+  min-width:68px;white-space:nowrap;letter-spacing:.2px;
+}
+.hm-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:5px;vertical-align:middle;}
+.hm-worked{background:rgba(52,211,153,.16);color:#34d399;}
+.hm-worked .hm-dot{background:#34d399;box-shadow:0 0 6px rgba(52,211,153,.6);}
+.hm-off{background:rgba(248,113,113,.20);color:#f87171;}
+.hm-off .hm-dot{background:#f87171;box-shadow:0 0 6px rgba(248,113,113,.6);}
+.hm-none{background:rgba(255,255,255,.03);color:rgba(148,163,184,.35);font-weight:500;}
+
+.hm-total{padding:12px 10px;text-align:center;font-weight:800;font-size:12px;min-width:60px;}
+.hm-worked-total{color:#34d399;}
+.hm-off-total{color:#f87171;}
+.hm-net-total{font-variant-numeric:tabular-nums;}
 
 /* ANALYSIS */
 .analysis-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:6px;}
@@ -139,21 +192,26 @@ svg{overflow:visible;}
     <div class="section-label">Key Performance Indicators</div>
     <div class="kpi-grid" id="kpi-grid"></div>
 
+    <div class="section-label">Top Performer</div>
+    <div id="top-driver-wrap"></div>
+
+    <div class="section-label">Driver × Day Attendance <span class="legend-inline"><span class="lg-swatch lg-work"></span>Worked <span class="lg-swatch lg-off"></span>Off <span class="lg-swatch lg-none"></span>No entry</span></div>
+    <div class="card">
+      <div class="card-title"><svg class="ti" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Weekly Attendance Grid</div>
+      <div class="heatmap-wrap" id="heatmap-wrap"></div>
+    </div>
+
+    <div class="section-label">Deep Analysis</div>
+    <div class="analysis-grid" id="analysis-grid"></div>
+
     <div class="section-label">Earnings Visuals</div>
     <div class="charts-grid">
       <div class="card chart-wide"><div class="card-title"><svg class="ti" viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg>Weekly Earnings Trend</div><div id="chart-trend"></div></div>
       <div class="card"><div class="card-title"><svg class="ti" viewBox="0 0 24 24"><line x1="6" y1="20" x2="6" y2="12"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="18" y1="20" x2="18" y2="9"/></svg>Driver Comparison</div><div id="chart-bar"></div></div>
       <div class="card"><div class="card-title"><svg class="ti" viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>Earnings Share</div><div id="chart-pie"></div></div>
       <div class="card"><div class="card-title"><svg class="ti" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M3 7l9-4 9 4"/><path d="M3 7l3 6H0z" transform="translate(3 0)"/><path d="M18 7l3 6h-6z"/></svg>Earnings vs Rent vs Net</div><div id="chart-rent"></div></div>
-      <div class="card"><div class="card-title"><svg class="ti" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Daily Breakdown</div><div id="chart-daily"></div></div>
+      <div class="card"><div class="card-title"><svg class="ti" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Daily Attendance Pattern</div><div id="chart-daily"></div></div>
     </div>
-
-    <div class="section-label">Daily Earnings Heatmap</div>
-    <div class="card"><div class="card-title"><svg class="ti" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Driver × Day</div>
-      <div class="heatmap-wrap"><table class="heatmap" id="heatmap"></table></div></div>
-
-    <div class="section-label">Deep Analysis</div>
-    <div class="analysis-grid" id="analysis-grid"></div>
     <div style="height:40px"></div>
   </div>
 </div>
@@ -306,7 +364,17 @@ function mapColumns(headerRow){
 }
 
 // Read all driver records from one weekly sheet. Handles the two-row layout:
-// daily amounts may sit on the name row or the row directly below it.
+// TOP row (name row) under each day column holds the VEHICLE CODE the driver
+// used that day, or the literal "XXX" meaning the driver was OFF that day.
+// The row directly BELOW holds that day's rent RATE (a reference number, not
+// earnings) — it is kept only as supplementary info, never used as income.
+function dayStatus(topVal){
+  const t=String(topVal==null?'':topVal).trim();
+  if(t==='') return {status:'none', vehicle:''};           // no entry yet (future week)
+  if(/^xxx$/i.test(t)) return {status:'off', vehicle:''};   // explicit OFF marker
+  return {status:'worked', vehicle:t};                      // any vehicle code = worked
+}
+
 function readWeekSheet(rows){
   const hdr=findHeaderRow(rows);
   if(hdr<0) return [];
@@ -319,17 +387,16 @@ function readWeekSheet(rows){
     if(!name) continue;
     if(txtHas(name,['total','weekly total','grand total','sum','average'])) continue;
     const next=rows[r+1]||{};
-    // Daily amount for each day: prefer the name row, else the row below.
-    const days=m.days.map(c=>{
-      if(c<0) return 0;
-      const onTop=num(row[c]);
-      return onTop!==0 ? onTop : num(next[c]);
-    });
+    // Attendance per day: read straight from the TOP (name) row, which holds
+    // the vehicle code (worked) or "XXX" (off). This is the accurate signal —
+    // the row below is a rent-rate reference, not an earnings figure.
+    const days=m.days.map(c=> c<0 ? {status:'none',vehicle:''} : dayStatus(row[c]));
+    // Supplementary: that day's rent rate (for tooltip/reference only).
+    const dayRates=m.days.map(c=> c<0 ? 0 : num(next[c]));
     const rent=m.rent>=0?num(row[m.rent]):0;
-    // Source-of-truth values taken DIRECTLY from the sheet's own columns.
-    // If a column is blank we keep it as 0 — we never invent earnings by
-    // summing the daily cells (those are the vehicle's daily-rent reference,
-    // not income). This matches exactly what the Excel file states.
+    // Source-of-truth aggregate values taken DIRECTLY from the sheet's own
+    // columns. If a column is blank we keep it as 0 — we never invent
+    // earnings by summing daily cells. This matches exactly what the file states.
     const wEarn = m.wEarn>=0 ? num(row[m.wEarn]) : 0;
     const wRent = m.wRent>=0 ? num(row[m.wRent]) : 0;
     const net   = m.net>=0   ? num(row[m.net])   : (wEarn-wRent);
@@ -338,14 +405,15 @@ function readWeekSheet(rows){
       vehicle:m.vehicle>=0?String(row[m.vehicle]||'').trim():'',
       rent: m.wRent>=0 ? wRent : rent,   // weekly rent if available
       dailyRent: rent,
-      days,
+      days,                               // [{status,vehicle}] per Mon..Sun — accurate attendance
+      dayRates,                           // reference rent-rate per day (not earnings)
       total: wEarn,                      // weekly earnings from the file
       net,                               // net earnings from the file
       worked:  m.worked>=0?num(row[m.worked]):0,
       off:     m.off>=0?num(row[m.off]):0,
       penalty: m.penalty>=0?num(row[m.penalty]):0,
     });
-    // The driver took two physical rows — skip the amount row we just consumed
+    // The driver took two physical rows — skip the rate row we just consumed
     // (only if it has no name of its own).
     if(next && (next[m.name]==null || String(next[m.name]).trim()==='')) r++;
   }
@@ -420,9 +488,50 @@ function getFiltered(){
 
 function applyFilters(){buildTimeline();renderAll();}
 
+function renderTopDriver(){
+  const wrap=document.getElementById('top-driver-wrap');
+  // Always scoped to the currently selected week (from the timeline), and
+  // respects the Driver/Vehicle filters — independent of the "View" mode so
+  // it always answers "who topped THIS week" even when viewing All Weeks.
+  const dr=document.getElementById('f-driver').value;
+  const veh=document.getElementById('f-vehicle').value;
+  const wd=allData.filter(d=>{
+    if(d.week!==selectedWeek) return false;
+    if(dr!=='ALL'&&d.driver!==dr) return false;
+    if(veh!=='ALL'&&d.vehicle!==veh) return false;
+    return true;
+  });
+  const withEarnings=wd.filter(d=>d.total>0);
+  if(!withEarnings.length){
+    wrap.innerHTML='<div class="top-driver-empty">No earnings recorded for this week yet.</div>';
+    return;
+  }
+  const ranked=[...withEarnings].sort((a,b)=>b.net-a.net);
+  const top=ranked[0];
+  const runnerUp=ranked[1];
+  const initials=top.driver.slice(0,2).toUpperCase();
+  const marginHtml = runnerUp
+    ? `+${eur(top.net-runnerUp.net)} ahead of ${runnerUp.driver}`
+    : 'Only driver with earnings this week';
+  wrap.innerHTML=`
+    <div class="top-driver-card">
+      <div class="td-avatar">${initials}</div>
+      <div class="td-info">
+        <div class="td-crown">${ICON.award.replace('<svg viewBox="0 0 24 24">','<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">')} Top Earner This Week</div>
+        <div class="td-name">${top.driver}</div>
+        <div class="td-meta">${top.vehicle||'—'} · ${top.worked} day${top.worked===1?'':'s'} worked · Earnings ${eur(top.total)}</div>
+      </div>
+      <div class="td-right">
+        <div class="td-net">${eur(top.net)}</div>
+        <div class="td-margin">${marginHtml}</div>
+      </div>
+    </div>`;
+}
+
 function renderAll(){
   const f=getFiltered();
   renderKPIs(f);
+  renderTopDriver();
   renderTrend();
   renderBar(f);
   renderPie(f);
@@ -612,44 +721,86 @@ function renderRent(data){
 }
 
 function renderDaily(data){
-  const drivers=[...new Set(data.map(d=>d.driver))];
-  const ds=drivers.map((drv,i)=>{
-    const row=data.find(d=>d.driver===drv);
-    return{label:drv,color:COLORS[i%COLORS.length],data:row?row.days:[0,0,0,0,0,0,0]};
-  });
+  // Accurate attendance pattern: how many drivers were WORKING on each weekday.
+  const counts=[0,0,0,0,0,0,0];
+  data.forEach(d=>d.days.forEach((day,i)=>{ if(day.status==='worked') counts[i]++; }));
+  const ds=[{label:'Drivers Working',color:'#34d399',data:counts}];
   document.getElementById('chart-daily').innerHTML=svgBar(DAYS,ds,300,180);
 }
 
+// Driver × Day attendance grid — accurate, from the sheet's own vehicle/XXX
+// markers. WORKED = green with vehicle code shown; OFF = red; no entry = grey.
 function renderHeatmap(){
   const wd=allData.filter(d=>d.week===selectedWeek);
-  if(!wd.length){document.getElementById('heatmap').innerHTML='<tr><td class="no-data">No data</td></tr>';return;}
-  const allVals=wd.flatMap(d=>d.days).filter(v=>v>0);
-  const max=Math.max(...allVals,1);
-  function cls(v){if(!v)return'hm-zero';const p=v/max;return p>.65?'hm-high':p>.3?'hm-mid':'hm-low';}
-  const hdr=`<tr><th>Driver</th>${DAYS.map(d=>`<th>${d}</th>`).join('')}<th>Total</th></tr>`;
-  const rows=wd.map(d=>`<tr>
-    <td class="hm-name">${d.driver}</td>
-    ${d.days.map(v=>`<td class="${cls(v)}">${v>0?eur(v):'—'}</td>`).join('')}
-    <td class="hm-total">${eur(d.total)}</td>
-  </tr>`).join('');
-  document.getElementById('heatmap').innerHTML=hdr+rows;
+  const wrap=document.getElementById('heatmap-wrap');
+  if(!wd.length){wrap.innerHTML='<p class="no-data">No data for this week</p>';return;}
+
+  let html=`<table class="heatmap">
+    <thead><tr><th class="hm-name-h">Driver</th>${DAYS.map(d=>`<th>${d}</th>`).join('')}<th>Worked</th><th>Off</th><th>Net</th></tr></thead><tbody>`;
+
+  wd.forEach(d=>{
+    html+=`<tr><td class="hm-name">${d.driver}<span class="hm-veh">${d.vehicle}</span></td>`;
+    d.days.forEach(day=>{
+      if(day.status==='off'){
+        html+=`<td class="hm-cell hm-off" title="${d.driver} — OFF"><span class="hm-dot"></span>OFF</td>`;
+      } else if(day.status==='worked'){
+        html+=`<td class="hm-cell hm-worked" title="${d.driver} — worked (${day.vehicle})"><span class="hm-dot"></span>${day.vehicle||'✓'}</td>`;
+      } else {
+        html+=`<td class="hm-cell hm-none" title="No entry">—</td>`;
+      }
+    });
+    html+=`<td class="hm-total hm-worked-total">${d.worked}</td>`;
+    html+=`<td class="hm-total hm-off-total">${d.off}</td>`;
+    html+=`<td class="hm-total hm-net-total" style="color:${d.net>=0?'var(--green)':'var(--red)'}">${eur(d.net)}</td>`;
+    html+='</tr>';
+  });
+  html+='</tbody></table>';
+  wrap.innerHTML=html;
 }
 
 function renderAnalysis(data){
   if(!data.length){document.getElementById('analysis-grid').innerHTML='<p class="no-data">No data</p>';return;}
   const drivers=[...new Set(data.map(d=>d.driver))];
   const bd=grp(data,'driver');
-  const dayTotals=DAYS.map((_,di)=>data.reduce((a,d)=>a+d.days[di],0));
-  const bestDay=dayTotals.indexOf(Math.max(...dayTotals));
-  const filtered=dayTotals.filter(v=>v>0);
-  const worstDay=filtered.length?dayTotals.indexOf(Math.min(...filtered)):0;
+
+  // Best/Worst day — based on real attendance counts (how many drivers worked
+  // each weekday), never invented earnings.
+  const dayCounts=[0,0,0,0,0,0,0];
+  data.forEach(d=>d.days.forEach((day,i)=>{ if(day.status==='worked') dayCounts[i]++; }));
+  const hasAny=dayCounts.some(v=>v>0);
+  const bestDay=hasAny?dayCounts.indexOf(Math.max(...dayCounts)):-1;
+  const worstDay=hasAny?dayCounts.indexOf(Math.min(...dayCounts.filter(v=>v>=0))):-1;
+
+  // Consistency — based on WEEKLY NET EARNINGS across all available weeks for
+  // that driver (respecting the driver/vehicle filter, but ignoring the
+  // week/"View" filter, since consistency needs multiple weeks to mean anything).
+  const dr=document.getElementById('f-driver').value;
+  const veh=document.getElementById('f-vehicle').value;
+  const allForConsistency=allData.filter(d=>{
+    if(dr!=='ALL'&&d.driver!==dr)return false;
+    if(veh!=='ALL'&&d.vehicle!==veh)return false;
+    return true;
+  });
+  const bdAll=grp(allForConsistency,'driver');
+  const MIN_WEEKS=3; // fewer than this and one odd week can swing the whole score — not trustworthy
   const consistency=drivers.map(drv=>{
-    const vals=bd[drv].flatMap(r=>r.days).filter(v=>v>0);
-    if(!vals.length)return{driver:drv,cv:999};
+    // Only count weeks where earnings were actually RECORDED (Weekly Earnings > 0).
+    // A week where the driver showed up but no fares were entered yet (e.g. an
+    // in-progress week) still charges rent and shows a negative Net Earnings —
+    // that's not real income volatility, it's missing data.
+    const weeksForDrv=(bdAll[drv]||[]).filter(r=>r.total>0);
+    if(weeksForDrv.length<MIN_WEEKS) return {driver:drv,cv:null,weeks:weeksForDrv.length,avg:null};
+    // Use GROSS Weekly Earnings, not Net. Net can be small or flip sign purely
+    // from rent, which makes % variability spike even when the driver's actual
+    // work output barely changed. Gross earnings reflect real day-to-day output.
+    const vals=weeksForDrv.map(r=>r.total);
     const mean=vals.reduce((a,b)=>a+b,0)/vals.length;
     const std=Math.sqrt(vals.reduce((a,b)=>a+(b-mean)**2,0)/vals.length);
-    return{driver:drv,cv:mean?(std/mean*100):999};
-  }).sort((a,b)=>a.cv-b.cv);
+    return {driver:drv,cv:mean?(std/mean*100):null,weeks:weeksForDrv.length,avg:mean};
+  });
+  const ranked=consistency.filter(c=>c.cv!==null).sort((a,b)=>a.cv-b.cv);
+  const unranked=consistency.filter(c=>c.cv===null);
+
   const wks=[...new Set(data.map(d=>d.week))].sort((a,b)=>a-b);
   let wowHtml='<div class="arow"><span>Need 2+ weeks</span></div>';
   if(wks.length>=2){
@@ -661,27 +812,32 @@ function renderAnalysis(data){
       :`<span class="badge br">▼ ${Math.abs(pct)}%</span>`);
     wowHtml=`<div class="arow"><span>Week-on-Week</span><span class="aval">${badge}</span></div>`;
   }
-  const rentEff=drivers.map(drv=>{
-    const earned=bd[drv].reduce((a,r)=>a+r.total,0);
-    const rent=bd[drv].reduce((a,r)=>a+r.rent,0);
-    return{driver:drv,ratio:earned?(rent/earned*100).toFixed(1):'—'};
-  });
   document.getElementById('analysis-grid').innerHTML=`
     <div class="analysis-card">
-      <h4>Best &amp; Worst Days</h4>
-      <div class="arow"><span>Best Day</span><span class="aval" style="color:var(--green)">${DAYS[bestDay]} — ${eur(dayTotals[bestDay])}</span></div>
-      <div class="arow"><span>Worst Day</span><span class="aval" style="color:var(--red)">${DAYS[worstDay]} — ${eur(dayTotals[worstDay])}</span></div>
-      ${DAYS.map((d,i)=>`<div class="arow"><span>${d}</span><span class="aval">${eur(dayTotals[i])}</span></div>`).join('')}
+      <h4>Best &amp; Worst Attendance Days</h4>
+      ${hasAny?`
+      <div class="arow"><span>Most Staffed</span><span class="aval" style="color:var(--green)">${DAYS[bestDay]} — ${dayCounts[bestDay]} driver${dayCounts[bestDay]===1?'':'s'}</span></div>
+      <div class="arow"><span>Least Staffed</span><span class="aval" style="color:var(--red)">${DAYS[worstDay]} — ${dayCounts[worstDay]} driver${dayCounts[worstDay]===1?'':'s'}</span></div>
+      ${DAYS.map((d,i)=>`<div class="arow"><span>${d}</span><span class="aval">${dayCounts[i]} working</span></div>`).join('')}
+      `:'<p class="no-data" style="padding:10px 0">No attendance entries yet</p>'}
     </div>
     <div class="analysis-card">
-      <h4>Driver Consistency</h4>
-      ${consistency.map((c,i)=>`<div class="arow"><span>${c.driver}</span>
-        <span class="badge ${i===0?'bg':i===consistency.length-1?'br':'ba'}">${i===0?'Most Consistent':i===consistency.length-1?'Most Variable':'Moderate'}</span>
-      </div>`).join('')}
+      <h4>Driver Consistency <span style="font-weight:500;text-transform:none;letter-spacing:0;">(weekly earnings, 3+ completed weeks)</span></h4>
+      ${ranked.length?ranked.map((c,i)=>`<div class="arow"><span>${c.driver}<span style="display:block;font-size:10px;color:var(--muted);font-weight:500;">avg ${eur(c.avg)}/wk</span></span>
+        <span style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:10px;color:var(--muted);font-variant-numeric:tabular-nums;">±${c.cv.toFixed(0)}%</span>
+          <span class="badge ${i===0?'bg':i===ranked.length-1?'br':'ba'}">${i===0?'Most Consistent':i===ranked.length-1?'Most Variable':'Moderate'}</span>
+        </span>
+      </div>`).join(''):'<p class="no-data" style="padding:10px 0">No driver has 3+ completed earnings weeks yet</p>'}
+      ${unranked.map(c=>`<div class="arow"><span>${c.driver}</span><span class="badge" style="background:rgba(148,163,184,.15);color:var(--muted)">${c.weeks}/${3} weeks logged</span></div>`).join('')}
     </div>
     <div class="analysis-card">
       <h4>Attendance (from file)</h4>
-      ${drivers.map(drv=>{const r=bd[drv][0];return `<div class="arow"><span>${drv}</span><span class="aval">${r.worked||0} worked · ${r.off||0} off</span></div>`;}).join('')}
+      ${drivers.map(drv=>{
+        const worked=bd[drv].reduce((a,r)=>a+(r.worked||0),0);
+        const off=bd[drv].reduce((a,r)=>a+(r.off||0),0);
+        return `<div class="arow"><span>${drv}</span><span class="aval">${worked} worked · ${off} off</span></div>`;
+      }).join('')}
     </div>
     <div class="analysis-card">
       <h4>Net per Driver (from file)</h4>
