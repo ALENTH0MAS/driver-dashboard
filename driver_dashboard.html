@@ -89,6 +89,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
 /* CHARTS - pure SVG/Canvas */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;overflow:hidden;margin-top:0;}
 .card-title{font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:7px;}
+.hm-week-range{margin-left:auto;font-size:11px;font-weight:600;color:var(--muted);white-space:nowrap;}
 .ti{width:16px;height:16px;flex:none;fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 .kpi-icon svg{width:20px;height:20px;fill:none;stroke:var(--kpi-color,var(--accent));stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 .drop-icon{color:var(--accent);}
@@ -196,7 +197,7 @@ svg{overflow:visible;}
 
     <div class="section-label">Driver × Day Attendance <span class="legend-inline"><span class="lg-swatch lg-work"></span>Worked <span class="lg-swatch lg-off"></span>Off <span class="lg-swatch lg-none"></span>No entry</span></div>
     <div class="card">
-      <div class="card-title"><svg class="ti" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Weekly Attendance Grid</div>
+      <div class="card-title"><svg class="ti" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Weekly Attendance Grid<span id="hm-week-range" class="hm-week-range"></span></div>
       <div class="heatmap-wrap" id="heatmap-wrap"></div>
     </div>
 
@@ -374,11 +375,23 @@ function dayStatus(topVal){
   return {status:'worked', vehicle:t};                      // any vehicle code = worked
 }
 
+// The row(s) above the header often hold a title like "Week 12 (17 Mar - 23 Mar)".
+// Grab the first non-empty one so we can show the real week date range if present.
+function getWeekTitle(rows,hdr){
+  for(let r=0;r<hdr;r++){
+    const row=rows[r]; if(!row) continue;
+    const vals=Object.keys(row).map(c=>String(row[c]==null?'':row[c]).trim()).filter(Boolean);
+    if(vals.length) return vals.join(' ');
+  }
+  return '';
+}
+
 function readWeekSheet(rows){
   const hdr=findHeaderRow(rows);
-  if(hdr<0) return [];
+  if(hdr<0) return {recs:[],title:''};
+  const title=getWeekTitle(rows,hdr);
   const m=mapColumns(rows[hdr]);
-  if(m.name<0) return [];
+  if(m.name<0) return {recs:[],title:''};
   const out=[];
   for(let r=hdr+1;r<rows.length;r++){
     const row=rows[r]; if(!row) continue;
@@ -416,7 +429,7 @@ function readWeekSheet(rows){
     // (only if it has no name of its own).
     if(next && (next[m.name]==null || String(next[m.name]).trim()==='')) r++;
   }
-  return out;
+  return {recs:out,title};
 }
 
 function processWorkbook(wb, fileName){
@@ -429,11 +442,11 @@ function processWorkbook(wb, fileName){
 
   sheetsToRead.forEach(name=>{
     const rows=wb.sheets[name]||[];
-    const recs=readWeekSheet(rows);
+    const {recs,title}=readWeekSheet(rows);
     if(recs.length){
       const widx=weeks.length+1;
       recs.forEach(r=>allData.push({week:widx,weekLabel:name,...r}));
-      weeks.push({idx:widx,label:name});
+      weeks.push({idx:widx,label:name,title});
     }
   });
 
@@ -731,6 +744,11 @@ function renderDaily(data){
 function renderHeatmap(){
   const wd=allData.filter(d=>d.week===selectedWeek);
   const wrap=document.getElementById('heatmap-wrap');
+  const rangeEl=document.getElementById('hm-week-range');
+  if(rangeEl){
+    const w=weeks.find(x=>x.idx===selectedWeek);
+    rangeEl.textContent = w ? (w.title || w.label) : '';
+  }
   if(!wd.length){wrap.innerHTML='<p class="no-data">No data for this week</p>';return;}
 
   let html=`<table class="heatmap">
